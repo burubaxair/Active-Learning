@@ -1,5 +1,5 @@
 # A script that uses Gaussian Process Regressor 
-# for the exersice at page 18, Figure 2.6. 
+# for the exercise at page 18, Figure 2.6. 
 # of the book "Active Learning" by Burr Settles, 
 # Link to the book: http://active-learning.net/
 

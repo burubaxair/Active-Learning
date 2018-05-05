@@ -1,5 +1,5 @@
 # A script that uses Logistic Regression 
-# for the exersice at page 13, Figure 2.2. 
+# for the exercise at page 13, Figure 2.2. 
 # of the book "Active Learning" by Burr Settles, 
 # Link to the book: http://active-learning.net/
 
