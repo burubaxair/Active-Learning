@@ -56,10 +56,11 @@ for i in range(n_iter):
     xx = np.linspace(-4,4)
     yy = a * xx - (logreg.intercept_[0]) / w[1]
 
-    class_colors = ["green", "red"]
+    class_colors = ["red" if i else "green" for i in y_train]
+
     plt.scatter(cl1[:,0], cl1[:,1], s = 2, marker='.', color='green')
     plt.scatter(cl2[:,0], cl2[:,1], s = 2, marker='.', color='red')
-    plt.scatter(X_train[:,0], X_train[:,1], s = 50, marker='s', c=class_colors)
+    plt.scatter(X_train[:,0], X_train[:,1], s = 50, marker="s", c=class_colors)
     plt.plot(xx, yy, 'b-')
     plt.xlim((-5, 5))   
     plt.ylim((-5, 5))
