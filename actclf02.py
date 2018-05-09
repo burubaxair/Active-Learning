@@ -14,24 +14,12 @@ low1 = -1; high1 = 1; low2 = -2; high2 = 2;
 
 n_p = 40
 
-range11 = np.linspace(low1, high1,n_p/2, endpoint=False)
-range22 = np.linspace(low2, high2,n_p, endpoint=False)
-range21 = np.linspace(low2, low1,n_p/4, endpoint=False)
-range22 = np.linspace(high1, high2,n_p/4, endpoint=False)
+range1 = np.linspace(low1, high1,n_p/2, endpoint=False)
+range2 = np.linspace(low2, high2,n_p, endpoint=False)
 
-cl1 = np.dstack(np.meshgrid(range11, range11)).reshape(-1, 2)
-
-cl_n = np.dstack(np.meshgrid(range11, range22)).reshape(-1, 2)
-cl_s = np.dstack(np.meshgrid(range11, range21)).reshape(-1, 2)
-cl_e = np.dstack(np.meshgrid(range22, range11)).reshape(-1, 2)
-cl_w = np.dstack(np.meshgrid(range21, range11)).reshape(-1, 2)
-
-cl_sw = np.dstack(np.meshgrid(range21, range21)).reshape(-1, 2)
-cl_se = np.dstack(np.meshgrid(range22, range21)).reshape(-1, 2)
-cl_nw = np.dstack(np.meshgrid(range21, range22)).reshape(-1, 2)
-cl_ne = np.dstack(np.meshgrid(range22, range22)).reshape(-1, 2)
-
-cl2 = np.vstack((cl_n,cl_s,cl_e,cl_w,cl_sw,cl_se,cl_nw,cl_ne))
+cl1 = np.dstack(np.meshgrid(range1, range1)).reshape(-1, 2)
+cl = np.dstack(np.meshgrid(range2, range2)).reshape(-1, 2)       # outer rectangle
+cl2 = cl[(np.abs(cl + 0.1) >= 1).any(1)]                 # take out the inner rectangle
 
 n_points1 = len(cl1)
 n_points2 = len(cl2)
