@@ -3,7 +3,7 @@
 # of the book "Active Learning" by Burr Settles, 
 # Link to the book: http://active-learning.net/
 
-# See also https://stackoverflow.com/questions/50171114/gaussian-process-regression-sudden-increase-of-the-predictions-variance
+# See also https://datascience.stackexchange.com/questions/31508/gaussian-process-regression-sudden-increase-of-the-predictions-variance
 
 import numpy as np 
 import matplotlib.pyplot as plt
@@ -28,7 +28,7 @@ def fit_GP(x_train):
     y_train = gaussian(x_train, mu, sig).ravel()
 
     # Instanciate a Gaussian Process model
-    kernel = C(1.0, (1e-3, 1e3)) * RBF(10, (1e-2, 1e2))
+    kernel = C(1.0, (1e-3, 1e3)) * RBF(1, (1e-2, 1e2))
     gp = GaussianProcessRegressor(kernel=kernel, n_restarts_optimizer=9)
 
     # Fit to data using Maximum Likelihood Estimation of the parameters
