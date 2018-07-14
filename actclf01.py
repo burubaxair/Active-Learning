@@ -86,7 +86,6 @@ for i in range(n_iter):
     ind_min_conf = np.argmin(np.absolute(pred-0.5), axis=0)[0]
     # print('Least confident: ', X_test[ind_min_conf,:], y_test[ind_min_conf],'\n')
 
-    
     # ------------------ random sampling ------------------
 
     pred, sc_c, yy_r = clf(X_train_r, X_test_r, y_train_r, y_test_r)
