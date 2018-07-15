@@ -76,21 +76,21 @@ xx = np.linspace(-4,4)
 
 for i in range(n_iter):
 
-    # --------------- uncertainty sampling ----------------
+    # --------------- Uncertainty sampling ----------------
 
     pred, sc_c, yy = clf(X_train, X_test, y_train, y_test)
     
-    print('score  : %.6f' % (sc_c))
+    print('Score for unc sampling: %.6f' % (sc_c))
     sc.append(sc_c)
     
     ind_min_conf = np.argmin(np.absolute(pred-0.5), axis=0)[0]
     # print('Least confident: ', X_test[ind_min_conf,:], y_test[ind_min_conf],'\n')
 
-    # ------------------ random sampling ------------------
+    # ------------------ Random sampling ------------------
 
-    pred, sc_c, yy_r = clf(X_train_r, X_test_r, y_train_r, y_test_r)
+    pred_r, sc_c, yy_r = clf(X_train_r, X_test_r, y_train_r, y_test_r)
     
-    print('score_r: %.6f\n' % (sc_c))
+    print('Score for rnd sampling: %.6f\n' % (sc_c))
     sc_r.append(sc_c)
 
     ind_r = np.random.choice(range(len(X_test_r)))
@@ -99,21 +99,37 @@ for i in range(n_iter):
 
     class_colors = ["red" if i else "green" for i in y_train]
 
-    plt.scatter(cl1[:,0], cl1[:,1], s = 2, marker='.', color='green')
-    plt.scatter(cl2[:,0], cl2[:,1], s = 2, marker='.', color='red')
-    plt.scatter(X_train[:,0], X_train[:,1], s = 50, marker="s", c=class_colors)
-    plt.plot(xx, yy, 'b-')
-    plt.plot(xx, yy_r, 'b:')
-    plt.xlim((-5, 5))   
-    plt.ylim((-5, 5))
-    plt.title('Iteration '+str(i+1))
-    plt.grid()
+    f, ax = plt.subplots(nrows=1, ncols=2)
+    
+    # Data points
+    ax[0].scatter(cl1[:,0], cl1[:,1], s = 2, marker='.', color='green')
+    ax[0].scatter(cl2[:,0], cl2[:,1], s = 2, marker='.', color='red')
+    
+    # Labeled data
+    ax[0].scatter(X_train[:,0], X_train[:,1], s = 50, marker="s", c=class_colors)
+    
+    # Separating line obtained with uncertainty sampling
+    ax[0].plot(xx, yy, 'b-')
+
+    # Separating line obtained with random sampling
+    ax[0].plot(xx, yy_r, 'b:')
+
+    ax[0].set_xlim((-5, 5))   
+    ax[0].set_ylim((-5, 5))
+    ax[0].grid()
+    
+    # Histogram of prediction probabilities
+    # It's minimum is always around 0.5 
+    # which makes uncertainty sampling win over random sampling
+    ax[1].hist(pred[:,0], bins=20)
+
+    plt.suptitle('Iteration '+str(i+1))
     plt.show()
 
     X_train, X_test, y_train, y_test = xy_update(X_train, X_test, y_train, y_test, ind_min_conf)
     X_train_r, X_test_r, y_train_r, y_test_r = xy_update(X_train_r, X_test_r, y_train_r, y_test_r, ind_r)
 
-
+# Plot the mean accuracy for the uncertainty sampling and random sampling approaches
 plt.plot(range(n_iter), sc, 'b-')
 plt.plot(range(n_iter), sc_r, 'b:')
 plt.grid()
